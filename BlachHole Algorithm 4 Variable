@@ -1,0 +1,60 @@
+clear
+clc
+
+%langkah 1
+star=100;
+variabel=[3 1 1 2];
+bh=-1000;
+itermax=1000;
+iter=0;
+
+stars=[(rand(star,1)*10),(rand(star,1)*10)-5,(rand(star,1)*10)+10,(rand(star,1)*10)-10];
+
+%langkah 2
+for i=1:star;
+    hv(i,1)=variabel(1,1)*(stars(i,1))+(variabel(1,2)*(stars(i,2))^4)-(variabel(1,3)*(stars(i,3)))+(variabel(1,4)*(stars(i,4)));
+    if bh<hv(i,1)
+        bh=hv(i,1);
+        xbh=[stars(i,1),stars(i,2),stars(i,3),stars(i,4)];
+    end
+end
+bh
+xbh
+%langkah 3
+while iter<itermax
+    for i=1:star;
+        stars(i,1)=stars(i,1)+(rand*(xbh(1,1)-stars(i,1)));
+        stars(i,2)=stars(i,2)+(rand*(xbh(1,2)-stars(i,2)));
+        stars(i,3)=stars(i,3)+(rand*(xbh(1,3)-stars(i,3)));
+        stars(i,4)=stars(i,4)+(rand*(xbh(1,4)-stars(i,4)));
+        hv(i,1)=(variabel(1,1)*(stars(i,1)))+(variabel(1,2)*(stars(i,2))^4)-(variabel(1,3)*(stars(i,3)))+(variabel(1,4)*(stars(i,4)));
+        if bh<hv(i,1)
+            bh=hv(i,1);
+            xbh=[stars(i,1),stars(i,2),stars(i,3),stars(i,4)];
+            iter=iter+1;
+        else if abs(bh-hv(i,1)) < bh-(bh/(hv(i,1)))
+                for i=1:star
+                    if stars(i,1)<rand*10
+                        stars(i,1)=rand*10;
+                    else stars(i,1)=stars(i,1);
+                    end
+                    if stars(i,2)<(rand*10)-5
+                        stars(i,2)=(rand*10)-5;
+                    else stars(i,2)=stars(i,2);
+                    end
+                    if stars(i,3)>(rand*10)+10
+                        stars(i,3)=(rand*10)+10;
+                    else stars(i,3)=stars(i,3);
+                    end
+                    if stars(i,4)<(rand*10)-10
+                        stars(i,4)=(rand*10)-10;
+                    else stars(i,4)=stars(i,4);
+                    end
+                end
+            end
+        end
+    end
+    iter=iter+1;
+end
+bh
+xbh
